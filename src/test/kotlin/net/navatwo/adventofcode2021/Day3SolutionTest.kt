@@ -15,22 +15,24 @@ class Day3SolutionTest {
     @Test
     fun `p1 sample`() {
         val input = part1.parseResource(SAMPLE_RESOURCE)
-//        assertThat(input).containsExactly(
-//            Action.Forward(5),
-//            Action.Down(5),
-//            Action.Forward(8),
-//            Action.Up(3),
-//            Action.Down(8),
-//            Action.Forward(2),
-//        )
+        assertThat(input.map { it.toString() }.take(4)).containsExactly(
+            "{2}",
+            "{0, 1, 2, 3}",
+            "{0, 2, 3}",
+            "{0, 2, 3, 4}",
+        )
 
-        assertThat(part1.solve(input)).isEqualTo(150)
+        val result = part1.solve(input)
+        assertThat(result).isEqualTo(Day3Solution.PowerRate(22, 9))
+        assertThat(result.consumption).isEqualTo(198)
     }
 
     @Test
     fun p1() {
         val input = part1.parseResource(INPUT_RESOURCE)
-        assertThat(part1.solve(input)).isEqualTo(2070300)
+
+        val result = part1.solve(input)
+        assertThat(result.consumption).isEqualTo(2250414)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
