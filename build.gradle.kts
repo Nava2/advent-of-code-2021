@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm") version "1.6.0"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.6.0"
 }
 
 group = "org.example"
@@ -9,11 +8,6 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
-
-allOpen {
-    annotation("org.openjdk.jmh.annotations.State")
-}
-
 
 dependencies {
     implementation(kotlin("stdlib"))

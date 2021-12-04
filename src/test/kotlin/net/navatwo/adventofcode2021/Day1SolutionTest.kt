@@ -1,8 +1,7 @@
-package net.navatwo.adventofcode2021.day1
+package net.navatwo.adventofcode2021
 
 import net.navatwo.adventofcode2021.benchmarks.Benchmark
-import net.navatwo.adventofcode2021.loadLines
-import net.navatwo.adventofcode2021.parseResource
+import net.navatwo.adventofcode2021.day1.Day1Solution
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,17 +9,17 @@ class Day1SolutionTest {
     @Test
     fun `p1 sample`() {
         val resourceName = "day1/p1_sample.txt"
-        val solution = Day1Solution.Part1()
+        val solution = Day1Solution.Part1
         val inputs = solution.parseResource(resourceName)
-        assertThat(solution.solve(inputs)).isEqualTo(7)
+        assertThat(Day1Solution.Part1.solve(inputs)).isEqualTo(7)
     }
 
     @Test
     fun `p1`() {
         val resourceName = "day1/p1_input.txt"
-        val solution = Day1Solution.Part1()
+        val solution = Day1Solution.Part1
         val inputs = solution.parseResource(resourceName)
-        assertThat(solution.solve(inputs)).isEqualTo(1681)
+        assertThat(Day1Solution.Part1.solve(inputs)).isEqualTo(1681)
 
         Benchmark.run(
             inputContent = loadLines(resourceName),
@@ -31,17 +30,17 @@ class Day1SolutionTest {
     @Test
     fun `p2 sample`() {
         val resourceName = "day1/p1_sample.txt"
-        val solution = Day1Solution.Part2()
+        val solution = Day1Solution.Part2
         val inputs = solution.parseResource(resourceName)
-        assertThat(solution.solve(inputs)).isEqualTo(5)
+        assertThat(Day1Solution.Part2.solve(inputs)).isEqualTo(5)
     }
 
     @Test
     fun `p2`() {
         val resourceName = "day1/p1_input.txt"
-        val solution = Day1Solution.Part2()
+        val solution = Day1Solution.Part2
         val inputs = solution.parseResource(resourceName)
-        assertThat(solution.solve(inputs)).isEqualTo(1704)
+        assertThat(Day1Solution.Part2.solve(inputs)).isEqualTo(1704)
 
         Benchmark.run(
             inputContent = loadLines(resourceName),

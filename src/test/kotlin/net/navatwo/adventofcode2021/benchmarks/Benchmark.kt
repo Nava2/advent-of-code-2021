@@ -12,9 +12,7 @@ class Benchmark<I, T> private constructor(
     private val inputConfig: Config?,
     private val solveConfig: Config,
 ) {
-    private val inputs by lazy {
-        solution.parse(inputContent)
-    }
+    private val inputs = solution.parse(inputContent)
 
     fun run() {
         inputConfig?.runBenchmark {
@@ -30,8 +28,8 @@ class Benchmark<I, T> private constructor(
         fun <I, T> run(
             inputContent: List<String>,
             solution: Solution<I, T>,
-            inputConfig: Config? = Stage.INPUT.config(warmupIterations = 2000U, iterations = 10_000U),
-            solveConfig: Config = Stage.SOLVE.config(warmupIterations = 5000U, iterations = 20_000U),
+            inputConfig: Config? = Stage.INPUT.config(warmupIterations = 2000U, iterations = 100_000U),
+            solveConfig: Config = Stage.SOLVE.config(warmupIterations = 5000U, iterations = 100_000U),
         ) {
             val benchmark = Benchmark(
                 inputContent = inputContent,

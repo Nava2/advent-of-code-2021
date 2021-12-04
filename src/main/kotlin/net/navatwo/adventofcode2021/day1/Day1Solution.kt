@@ -2,10 +2,8 @@ package net.navatwo.adventofcode2021.day1
 
 import net.navatwo.adventofcode2021.framework.Solution
 
-object Day1Solution {
-    class Part1 : Solution<Depth, Int> {
-        override fun parse(lines: List<String>): List<Depth> = Day1Solution.parse(lines)
-
+sealed class Day1Solution : Solution<Day1Solution.Depth, Int> {
+    object Part1 : Day1Solution() {
         override fun solve(inputs: List<Depth>): Int {
             return inputs.zipWithNext()
                 .map { (prev, next) -> next.depth >= prev.depth }
@@ -13,9 +11,7 @@ object Day1Solution {
         }
     }
 
-    class Part2 : Solution<Depth, Int> {
-        override fun parse(lines: List<String>): List<Depth> = Day1Solution.parse(lines)
-
+    object Part2 : Day1Solution() {
         override fun solve(inputs: List<Depth>): Int {
             val inputsW2 = inputs.subList(1, inputs.size)
             val inputsW3 = inputs.subList(2, inputs.size)
@@ -27,7 +23,7 @@ object Day1Solution {
         }
     }
 
-    private fun parse(lines: List<String>): List<Depth> = lines.map { Depth(it.toInt()) }
+    override fun parse(lines: List<String>): List<Depth> = lines.map { Depth(it.toInt()) }
 
     data class Depth(val depth: Int)
 }
