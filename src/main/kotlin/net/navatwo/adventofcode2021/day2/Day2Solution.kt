@@ -2,10 +2,10 @@ package net.navatwo.adventofcode2021.day2
 
 import net.navatwo.adventofcode2021.framework.Solution
 
-sealed class Day2Solution : Solution<Day2Solution.Action, Int> {
+sealed class Day2Solution : Solution<List<Day2Solution.Action>, Int> {
     object Part1 : Day2Solution() {
-        override fun solve(inputs: List<Action>): Int {
-            val position = inputs.fold(Position.ZERO) { position, action ->
+        override fun solve(input: List<Action>): Int {
+            val position = input.fold(Position.ZERO) { position, action ->
                 val (x, y, _) = position
                 when (action) {
                     is Action.Forward -> position.copy(x = x + action.scalar)
@@ -19,8 +19,8 @@ sealed class Day2Solution : Solution<Day2Solution.Action, Int> {
     }
 
     object Part2 : Day2Solution() {
-        override fun solve(inputs: List<Action>): Int {
-            val position = inputs.fold(Position.ZERO) { position, action ->
+        override fun solve(input: List<Action>): Int {
+            val position = input.fold(Position.ZERO) { position, action ->
                 val (x, y, aim) = position
                 when (action) {
                     is Action.Forward -> position.copy(
@@ -74,7 +74,6 @@ sealed class Day2Solution : Solution<Day2Solution.Action, Int> {
             val ZERO = Position(0, 0, 0)
         }
     }
-
 
     sealed interface Action {
         val scalar: Int

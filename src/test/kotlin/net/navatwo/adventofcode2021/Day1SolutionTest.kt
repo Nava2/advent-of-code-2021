@@ -10,16 +10,16 @@ class Day1SolutionTest {
     fun `p1 sample`() {
         val resourceName = "day1/p1_sample.txt"
         val solution = Day1Solution.Part1
-        val inputs = solution.parseResource(resourceName)
-        assertThat(Day1Solution.Part1.solve(inputs)).isEqualTo(7)
+        val input = solution.parseResource(resourceName)
+        assertThat(Day1Solution.Part1.solve(input)).isEqualTo(7)
     }
 
     @Test
     fun `p1`() {
         val resourceName = "day1/p1_input.txt"
         val solution = Day1Solution.Part1
-        val inputs = solution.parseResource(resourceName)
-        assertThat(Day1Solution.Part1.solve(inputs)).isEqualTo(1681)
+        val input = solution.parseResource(resourceName)
+        assertThat(Day1Solution.Part1.solve(input)).isEqualTo(1681)
 
         Benchmark.run(
             inputContent = loadLines(resourceName),
@@ -31,16 +31,16 @@ class Day1SolutionTest {
     fun `p2 sample`() {
         val resourceName = "day1/p1_sample.txt"
         val solution = Day1Solution.Part2
-        val inputs = solution.parseResource(resourceName)
-        assertThat(Day1Solution.Part2.solve(inputs)).isEqualTo(5)
+        val input = solution.parseResource(resourceName)
+        assertThat(Day1Solution.Part2.solve(input)).isEqualTo(5)
     }
 
     @Test
     fun `p2`() {
         val resourceName = "day1/p1_input.txt"
         val solution = Day1Solution.Part2
-        val inputs = solution.parseResource(resourceName)
-        assertThat(Day1Solution.Part2.solve(inputs)).isEqualTo(1704)
+        val input = solution.parseResource(resourceName)
+        assertThat(Day1Solution.Part2.solve(input)).isEqualTo(1704)
 
         Benchmark.run(
             inputContent = loadLines(resourceName),

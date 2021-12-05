@@ -28,8 +28,8 @@ class Benchmark<I, T> private constructor(
         fun <I, T> run(
             inputContent: List<String>,
             solution: Solution<I, T>,
-            inputConfig: Config? = Stage.INPUT.config(warmupIterations = 2000U, iterations = 100_000U),
-            solveConfig: Config = Stage.SOLVE.config(warmupIterations = 5000U, iterations = 100_000U),
+            inputConfig: Config? = Stage.INPUT.config(warmupIterations = 2000U, iterations = 25_000U),
+            solveConfig: Config = Stage.SOLVE.config(warmupIterations = 5000U, iterations = 25_000U),
         ) {
             val benchmark = Benchmark(
                 inputContent = inputContent,
@@ -86,7 +86,7 @@ private inline fun Benchmark.Config.runBenchmark(operation: () -> Unit): Benchma
     }.toDuration(DurationUnit.MILLISECONDS)
 
     val operationTime = solveTime / iterations.toDouble()
-    println("[$stage] Completed parsing [$solveTime, $operationTime/op]")
+    println("[$stage] Completed operations [$solveTime, $operationTime/op]")
 
     return Benchmark.Result(
         stage = stage,

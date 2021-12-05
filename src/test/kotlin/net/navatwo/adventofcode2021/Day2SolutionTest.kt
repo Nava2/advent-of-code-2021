@@ -6,13 +6,16 @@ import net.navatwo.adventofcode2021.day2.Day2Solution.Action
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+private const val SAMPLE_RESOURCE = "day2/p1_sample.txt"
+private const val INPUT_RESOURCE = "day2/p1_input.txt"
+private val part1 = Day2Solution.Part1
+private val part2 = Day2Solution.Part2
+
 class Day2SolutionTest {
     @Test
     fun `p1 sample`() {
-        val resourceName = "day2/p1_sample.txt"
-        val solution = Day2Solution.Part1
-        val inputs = solution.parseResource(resourceName)
-        assertThat(inputs).containsExactly(
+        val input = part1.parseResource(SAMPLE_RESOURCE)
+        assertThat(input).containsExactly(
             Action.Forward(5),
             Action.Down(5),
             Action.Forward(8),
@@ -21,40 +24,34 @@ class Day2SolutionTest {
             Action.Forward(2),
         )
 
-        assertThat(solution.solve(inputs)).isEqualTo(150)
+        assertThat(part1.solve(input)).isEqualTo(150)
     }
 
     @Test
     fun p1() {
-        val resourceName = "day2/p1_input.txt"
-        val solution = Day2Solution.Part1
-        val inputs = solution.parseResource(resourceName)
-        assertThat(solution.solve(inputs)).isEqualTo(2070300)
+        val input = part1.parseResource(INPUT_RESOURCE)
+        assertThat(part1.solve(input)).isEqualTo(2070300)
 
         Benchmark.run(
-            inputContent = loadLines(resourceName),
-            solution = solution,
+            inputContent = loadLines(INPUT_RESOURCE),
+            solution = part1,
         )
     }
 
     @Test
     fun `p2 - sample`() {
-        val resourceName = "day2/p1_sample.txt"
-        val solution = Day2Solution.Part2
-        val inputs = solution.parseResource(resourceName)
-        assertThat(solution.solve(inputs)).isEqualTo(900)
+        val input = part2.parseResource(SAMPLE_RESOURCE)
+        assertThat(part2.solve(input)).isEqualTo(900)
     }
 
     @Test
     fun p2() {
-        val resourceName = "day2/p1_input.txt"
-        val solution = Day2Solution.Part2
-        val inputs = solution.parseResource(resourceName)
-        assertThat(solution.solve(inputs)).isEqualTo(2078985210)
+        val input = part2.parseResource(INPUT_RESOURCE)
+        assertThat(part2.solve(input)).isEqualTo(2078985210)
 
         Benchmark.run(
-            inputContent = loadLines(resourceName),
-            solution = solution,
+            inputContent = loadLines(INPUT_RESOURCE),
+            solution = part2,
         )
     }
 }

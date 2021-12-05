@@ -14,6 +14,6 @@ fun loadLines(resourceName: String): List<String> {
     }
 }
 
-fun <I, T> Solution<I, T>.parseResource(resourceName: String): List<I> {
+fun <I, T> Solution<I, T>.parseResource(resourceName: String): I {
     return parse(loadLines(resourceName))
 }
