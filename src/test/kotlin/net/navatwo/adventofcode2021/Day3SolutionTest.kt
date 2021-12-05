@@ -2,6 +2,8 @@ package net.navatwo.adventofcode2021
 
 import net.navatwo.adventofcode2021.benchmarks.Benchmark
 import net.navatwo.adventofcode2021.day3.Day3Solution
+import net.navatwo.adventofcode2021.day3.Day3Solution.Companion.cleanUnmatchedValuesBasedOnBitIndex
+import net.navatwo.adventofcode2021.day3.Day3Solution.Companion.isOneMostCommonAtIndex
 import net.navatwo.adventofcode2021.day3.Day3Solution.LifeSupportRate
 import net.navatwo.adventofcode2021.day3.toBitSet
 import org.assertj.core.api.Assertions.assertThat
@@ -52,15 +54,13 @@ class Day3SolutionTest {
         )
 
         assertThat(
-            Day3Solution.isOneMostCommonAtIndex(
-                possibleValues = inputs,
+            inputs.isOneMostCommonAtIndex(
                 bitIndex = 0,
             )
         ).isEqualTo(1)
 
         assertThat(
-            Day3Solution.isOneMostCommonAtIndex(
-                possibleValues = inputs,
+            inputs.isOneMostCommonAtIndex(
                 bitIndex = 1,
             )
         ).isEqualTo(1)
@@ -70,9 +70,7 @@ class Day3SolutionTest {
     fun `p2 - cleanUnmatchedValuesBasedOnBitIndex - use most common bit`() {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
-        val bitSets = input.bitSets.toMutableList()
-        Day3Solution.cleanUnmatchedValuesBasedOnBitIndex(
-            bitSets,
+        var bitSets = input.bitSets.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit = true,
             bitIndex = 0,
         )
@@ -86,8 +84,7 @@ class Day3SolutionTest {
             "11001",
         )
 
-        Day3Solution.cleanUnmatchedValuesBasedOnBitIndex(
-            bitSets,
+        bitSets = bitSets.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit = true,
             bitIndex = 1,
         )
@@ -98,8 +95,7 @@ class Day3SolutionTest {
             "10000",
         )
 
-        Day3Solution.cleanUnmatchedValuesBasedOnBitIndex(
-            bitSets,
+        bitSets = bitSets.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit = true,
             bitIndex = 2,
         )
@@ -109,8 +105,7 @@ class Day3SolutionTest {
             "10101",
         )
 
-        Day3Solution.cleanUnmatchedValuesBasedOnBitIndex(
-            bitSets,
+        bitSets = bitSets.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit = true,
             bitIndex = 3,
         )
@@ -119,8 +114,7 @@ class Day3SolutionTest {
             "10111",
         )
 
-        Day3Solution.cleanUnmatchedValuesBasedOnBitIndex(
-            bitSets,
+        bitSets = bitSets.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit = true,
             bitIndex = 4,
         )
@@ -133,9 +127,7 @@ class Day3SolutionTest {
     fun `p2 - cleanUnmatchedValuesBasedOnBitIndex - use least common bit`() {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
-        val bitSets = input.bitSets.toMutableList()
-        Day3Solution.cleanUnmatchedValuesBasedOnBitIndex(
-            bitSets,
+        var bitSets = input.bitSets.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit = false,
             bitIndex = 0,
         )
@@ -147,8 +139,7 @@ class Day3SolutionTest {
             "01010",
         )
 
-        Day3Solution.cleanUnmatchedValuesBasedOnBitIndex(
-            bitSets,
+        bitSets = bitSets.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit = false,
             bitIndex = 1,
         )
@@ -157,8 +148,7 @@ class Day3SolutionTest {
             "01010",
         )
 
-        Day3Solution.cleanUnmatchedValuesBasedOnBitIndex(
-            bitSets,
+        bitSets = bitSets.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit = false,
             bitIndex = 2,
         )

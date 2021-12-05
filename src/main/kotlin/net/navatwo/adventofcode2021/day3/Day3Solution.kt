@@ -2,7 +2,6 @@ package net.navatwo.adventofcode2021.day3
 
 import net.navatwo.adventofcode2021.framework.Solution
 import java.util.BitSet
-import java.util.LinkedList
 import kotlin.math.roundToInt
 
 sealed class Day3Solution<S> : Solution<Day3Solution.Input, S> {
@@ -50,11 +49,11 @@ sealed class Day3Solution<S> : Solution<Day3Solution.Input, S> {
 
     companion object {
         internal fun searchForValue(input: List<BitSet>, useMostCommonBit: Boolean): BitSet {
-            val possibleValues = LinkedList(input)
+            var possibleValues = input
 
             var bitIndex = 0
             while (possibleValues.size != 1) {
-                cleanUnmatchedValuesBasedOnBitIndex(possibleValues, useMostCommonBit, bitIndex)
+                possibleValues = possibleValues.cleanUnmatchedValuesBasedOnBitIndex(useMostCommonBit, bitIndex)
 
                 bitIndex++
             }
@@ -62,43 +61,36 @@ sealed class Day3Solution<S> : Solution<Day3Solution.Input, S> {
             return possibleValues.single()
         }
 
-        internal fun cleanUnmatchedValuesBasedOnBitIndex(
-            possibleValues: MutableList<BitSet>,
+        internal fun Collection<BitSet>.cleanUnmatchedValuesBasedOnBitIndex(
             useMostCommonBit: Boolean,
             bitIndex: Int
-        ) {
-            val mostCommonBit = isOneMostCommonAtIndex(possibleValues, bitIndex)
+        ): List<BitSet> {
+            val mostCommonBit = isOneMostCommonAtIndex(bitIndex)
 
             val bitToKeep = if (useMostCommonBit) {
                 mostCommonBit
             } else {
-                mostCommonBit xor 1
+                mostCommonBit xor 1 // flip the bit
             }
 
-            val reverseIterator = possibleValues.listIterator()
-            while (reverseIterator.hasNext()) {
-                val bitSet = reverseIterator.next()
-
+            return filter { bitSet ->
                 val bitValue = if (bitSet.get(bitIndex)) 1 else 0
-                if (bitToKeep != bitValue) {
-                    reverseIterator.remove()
-                }
+                bitToKeep == bitValue
             }
         }
 
-        internal fun isOneMostCommonAtIndex(
-            possibleValues: Collection<BitSet>,
+        internal fun Collection<BitSet>.isOneMostCommonAtIndex(
             bitIndex: Int,
         ): Int {
             var oneCount = 0
 
-            for (bitSet in possibleValues) {
+            for (bitSet in this) {
                 if (bitSet.get(bitIndex)) {
                     oneCount += 1
                 }
             }
 
-            val halfSize = (possibleValues.size / 2.0).roundToInt()
+            val halfSize = (this.size / 2.0).roundToInt()
             return if (oneCount >= halfSize) 1 else 0
         }
 
@@ -106,21 +98,22 @@ sealed class Day3Solution<S> : Solution<Day3Solution.Input, S> {
             possibleValues: Collection<BitSet>,
             width: Int,
         ): BitSet {
-            val oneCounts = IntArray(width)
+            val halfSize = (possibleValues.size / 2.0).roundToInt()
 
-            for (bitSet in possibleValues) {
-                for (bitIndex in 0 until width) {
+            val result = BitSet(width)
+
+            for (bitIndex in 0 until width) {
+                var oneCount = 0
+
+                for (bitSet in possibleValues) {
                     if (bitSet.get(bitIndex)) {
-                        oneCounts[bitIndex] += 1
+                        oneCount += 1
                     }
                 }
+
+                result.set(bitIndex, oneCount >= halfSize)
             }
 
-            val halfSize = (possibleValues.size / 2.0).roundToInt()
-            val result = BitSet(width)
-            for ((bitIndex, bitValue) in oneCounts.asSequence().map { it > halfSize }.withIndex()) {
-                result.set(bitIndex, bitValue)
-            }
             return result
         }
     }
