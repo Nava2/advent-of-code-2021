@@ -11,18 +11,53 @@ sealed class Day4Solution<S> : Solution<Day4Solution.Input, S> {
             val numbers = input.numbers
             val cards = input.cards.associateWith { Card.create(it) }
 
-            return numbers.asSequence()
+            return numbers
                 .mapNotNull { pickedNumber ->
-                    val (c, card) = cards.entries
-                        .firstOrNull { (_, card) ->
-                            card.pickValue(pickedNumber)
-                        } ?: return@mapNotNull null
+                    val winningEntries = cards.filterValues { card -> card.pickValue(pickedNumber) }
 
-                    Result(
-                        number = pickedNumber,
-                        card = c,
-                        computed = card.result(pickedNumber),
-                    )
+                    if (winningEntries.isEmpty()) return@mapNotNull null
+
+                    winningEntries.firstNotNullOf { (c, card) ->
+                        Result(
+                            number = pickedNumber,
+                            card = c,
+                            computed = card.result(pickedNumber),
+                        )
+                    }
+                }
+                .first()
+        }
+    }
+
+    object Part2 : Day4Solution<Result>() {
+        override fun solve(input: Input): Result {
+            val numbers = input.numbers
+            val cards = input.cards
+                .associateWith { Card.create(it) }
+                .toMutableMap()
+
+            return numbers
+                .mapNotNull { pickedNumber ->
+                    val winningCards = cards.entries.filter { (_, card) ->
+                        card.pickValue(pickedNumber)
+                    }
+
+                    if (winningCards.isEmpty()) {
+                        return@mapNotNull null
+                    }
+
+                    winningCards.firstNotNullOfOrNull { (c, card) ->
+                        if (cards.size == 1) {
+                            Result(
+                                number = pickedNumber,
+                                card = c,
+                                computed = card.result(pickedNumber),
+                            )
+                        } else {
+                            cards.remove(c)
+                            null
+                        }
+                    }
                 }
                 .first()
         }
@@ -122,6 +157,10 @@ sealed class Day4Solution<S> : Solution<Day4Solution.Input, S> {
 
             override fun hashCode(): Int {
                 return Objects.hash(value)
+            }
+
+            override fun toString(): String {
+                return (if (picked) "*$value*" else value.toString()).padStart(4, ' ')
             }
         }
 

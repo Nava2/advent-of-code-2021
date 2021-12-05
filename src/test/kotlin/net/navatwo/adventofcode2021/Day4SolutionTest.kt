@@ -1,8 +1,6 @@
 package net.navatwo.adventofcode2021
 
 import net.navatwo.adventofcode2021.benchmarks.Benchmark
-import net.navatwo.adventofcode2021.day3.Day3Solution
-import net.navatwo.adventofcode2021.day3.Day3Solution.LifeSupportRate
 import net.navatwo.adventofcode2021.day4.Day4Solution
 import net.navatwo.adventofcode2021.day4.Day4Solution.Input
 import org.assertj.core.api.Assertions.assertThat
@@ -11,7 +9,7 @@ import org.junit.jupiter.api.Test
 private const val SAMPLE_RESOURCE = "day4/p1_sample.txt"
 private const val INPUT_RESOURCE = "day4/p1_input.txt"
 private val part1 = Day4Solution.Part1
-private val part2 = Day3Solution.Part2
+private val part2 = Day4Solution.Part2
 
 class Day4SolutionTest {
     @Test
@@ -65,12 +63,9 @@ class Day4SolutionTest {
     @Test
     fun `p2 - sample`() {
         val input = part2.parseResource(SAMPLE_RESOURCE)
-        assertThat(part2.solve(input)).isEqualTo(
-            LifeSupportRate(
-                oxygenGeneratorRate = 23,
-                co2ScrubberRate = 10,
-            )
-        )
+
+        val result = part2.solve(input)
+        assertThat(result.computed).isEqualTo(1924)
     }
 
     @Test
@@ -78,13 +73,7 @@ class Day4SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result.consumption).isEqualTo(6085575)
-        assertThat(result).isEqualTo(
-            LifeSupportRate(
-                oxygenGeneratorRate = 1935,
-                co2ScrubberRate = 3145,
-            )
-        )
+        assertThat(result.computed).isEqualTo(16168)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
