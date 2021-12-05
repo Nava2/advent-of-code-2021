@@ -4,6 +4,7 @@ import net.navatwo.adventofcode2021.benchmarks.Benchmark
 import net.navatwo.adventofcode2021.day3.Day3Solution
 import net.navatwo.adventofcode2021.day3.Day3Solution.LifeSupportRate
 import net.navatwo.adventofcode2021.day4.Day4Solution
+import net.navatwo.adventofcode2021.day4.Day4Solution.Input
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -45,8 +46,7 @@ class Day4SolutionTest {
         )
 
         val result = part1.solve(input)
-        assertThat(result).isEqualTo(198)
-
+        assertThat(result.computed).isEqualTo(4512)
     }
 
     @Test
@@ -54,7 +54,7 @@ class Day4SolutionTest {
         val input = part1.parseResource(INPUT_RESOURCE)
 
         val result = part1.solve(input)
-        assertThat(result).isEqualTo(2250414)
+        assertThat(result.computed).isEqualTo(22680)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
@@ -93,6 +93,6 @@ class Day4SolutionTest {
     }
 }
 
-private fun createCard(vararg rows: List<Int>): Day4Solution.Card = Day4Solution.Card(
-    board = rows.map { row -> row.map { Day4Solution.Card.Element(it, false) } },
+private fun createCard(vararg rows: List<Int>): Input.Card = Input.Card(
+    board = rows.toList(),
 )
