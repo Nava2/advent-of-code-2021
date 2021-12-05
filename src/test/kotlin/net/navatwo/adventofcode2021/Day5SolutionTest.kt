@@ -3,6 +3,8 @@ package net.navatwo.adventofcode2021
 import net.navatwo.adventofcode2021.benchmarks.Benchmark
 import net.navatwo.adventofcode2021.day4.Day4Solution
 import net.navatwo.adventofcode2021.day5.Day5Solution
+import net.navatwo.adventofcode2021.day5.Day5Solution.Input.Line
+import net.navatwo.adventofcode2021.day5.Day5Solution.Input.Point
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -16,8 +18,31 @@ class Day5SolutionTest {
     fun `p1 sample`() {
         val input = part1.parseResource(SAMPLE_RESOURCE)
 
+        assertThat(input.lines).contains(
+            Line(
+                from = Point(0, 9),
+                to = Point(5, 9),
+            ),
+            Line(
+                from = Point(8, 0),
+                to = Point(0, 8),
+            ),
+            Line(
+                from = Point(9, 4),
+                to = Point(3, 4),
+            ),
+            Line(
+                from = Point(2, 2),
+                to = Point(2, 1),
+            ),
+            Line(
+                from = Point(7, 0),
+                to = Point(7, 4),
+            ),
+        )
+
         val result = part1.solve(input)
-        assertThat(result.computed).isEqualTo(4512)
+        assertThat(result.computed).isEqualTo(5)
     }
 
     @Test
@@ -25,7 +50,7 @@ class Day5SolutionTest {
         val input = part1.parseResource(INPUT_RESOURCE)
 
         val result = part1.solve(input)
-        assertThat(result.computed).isEqualTo(22680)
+        assertThat(result.computed).isEqualTo(5774)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
