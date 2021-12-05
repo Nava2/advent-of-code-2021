@@ -86,7 +86,7 @@ private inline fun Benchmark.Config.runBenchmark(operation: () -> Unit): Benchma
     }.toDuration(DurationUnit.MILLISECONDS)
 
     val operationTime = solveTime / iterations.toDouble()
-    println("[$stage] Completed parsing [$solveTime, $operationTime/op]")
+    println("[$stage] Completed operations [$solveTime, $operationTime/op]")
 
     return Benchmark.Result(
         stage = stage,
