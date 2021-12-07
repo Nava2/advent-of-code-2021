@@ -1,11 +1,12 @@
 package net.navatwo.adventofcode2021.day5
 
+import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 import kotlin.math.sign
 
 class Day5Solution private constructor(
     private val includeDiagonals: Boolean
-) : Solution<Day5Solution.Input, Day5Solution.Result> {
+) : Solution<Day5Solution.Input, ComputedResult> {
     companion object {
         val Part1 = Day5Solution(false)
         val Part2 = Day5Solution(true)
@@ -23,7 +24,7 @@ class Day5Solution private constructor(
         )
     }
 
-    override fun solve(input: Input): Result {
+    override fun solve(input: Input): ComputedResult {
         val lines = run {
             var sequence = input.lines.asSequence()
                 .map { (from, to) -> Line(from, to) }
@@ -54,7 +55,7 @@ class Day5Solution private constructor(
             }
         }
 
-        return Result(
+        return ComputedResult.Simple(
             computed = board.sumOf { r ->
                 r.count { it >= 2 }
             }
@@ -101,7 +102,7 @@ class Day5Solution private constructor(
         }
     }
 
-    fun maxOfElements(a: Point, b: Point): Point {
+    private fun maxOfElements(a: Point, b: Point): Point {
         return Point(x = maxOf(a.x, b.x), y = maxOf(a.y, b.y))
     }
 
@@ -113,6 +114,4 @@ class Day5Solution private constructor(
             val to: Point,
         )
     }
-
-    data class Result(val computed: Int)
 }

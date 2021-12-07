@@ -11,7 +11,7 @@ class Day1SolutionTest {
         val resourceName = "day1/p1_sample.txt"
         val solution = Day1Solution.Part1
         val input = solution.parseResource(resourceName)
-        assertThat(Day1Solution.Part1.solve(input)).isEqualTo(7)
+        assertThat(Day1Solution.Part1.solve(input)).isComputed(7)
     }
 
     @Test
@@ -19,7 +19,7 @@ class Day1SolutionTest {
         val resourceName = "day1/p1_input.txt"
         val solution = Day1Solution.Part1
         val input = solution.parseResource(resourceName)
-        assertThat(Day1Solution.Part1.solve(input)).isEqualTo(1681)
+        assertThat(Day1Solution.Part1.solve(input)).isComputed(1681)
 
         Benchmark.run(
             inputContent = loadLines(resourceName),
@@ -32,7 +32,7 @@ class Day1SolutionTest {
         val resourceName = "day1/p1_sample.txt"
         val solution = Day1Solution.Part2
         val input = solution.parseResource(resourceName)
-        assertThat(Day1Solution.Part2.solve(input)).isEqualTo(5)
+        assertThat(Day1Solution.Part2.solve(input)).isComputed(5)
     }
 
     @Test
@@ -40,7 +40,7 @@ class Day1SolutionTest {
         val resourceName = "day1/p1_input.txt"
         val solution = Day1Solution.Part2
         val input = solution.parseResource(resourceName)
-        assertThat(Day1Solution.Part2.solve(input)).isEqualTo(1704)
+        assertThat(Day1Solution.Part2.solve(input)).isComputed(1704L)
 
         Benchmark.run(
             inputContent = loadLines(resourceName),

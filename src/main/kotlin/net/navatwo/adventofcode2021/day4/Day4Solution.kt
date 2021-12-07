@@ -1,12 +1,13 @@
 package net.navatwo.adventofcode2021.day4
 
+import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 import java.util.Objects
 
-private val CARD_ROWS = 5
+private const val CARD_ROWS = 5
 
-sealed class Day4Solution<S> : Solution<Day4Solution.Input, S> {
-    object Part1 : Day4Solution<Result>() {
+sealed class Day4Solution : Solution<Day4Solution.Input, Day4Solution.Result> {
+    object Part1 : Day4Solution() {
         override fun solve(input: Input): Result {
             val numbers = input.numbers
             val cards = input.cards.associateWith { Card.create(it) }
@@ -29,7 +30,7 @@ sealed class Day4Solution<S> : Solution<Day4Solution.Input, S> {
         }
     }
 
-    object Part2 : Day4Solution<Result>() {
+    object Part2 : Day4Solution() {
         override fun solve(input: Input): Result {
             val numbers = input.numbers
             val cards = input.cards
@@ -96,8 +97,14 @@ sealed class Day4Solution<S> : Solution<Day4Solution.Input, S> {
     data class Result(
         val number: Int,
         val card: Input.Card,
-        val computed: Int,
-    )
+        override val computed: Long,
+    ) : ComputedResult {
+        constructor(
+            number: Int,
+            card: Input.Card,
+            computed: Int,
+        ) : this(number, card, computed.toLong())
+    }
 
     private class Card(
         val board: List<List<Element>>,
