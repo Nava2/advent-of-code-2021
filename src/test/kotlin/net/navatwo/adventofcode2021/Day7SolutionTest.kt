@@ -92,7 +92,7 @@ class Day7SolutionTest {
     private fun runAndAssert(part: Day7Solution, input: Day7Solution.Input, position: Int, expected: Map<Int, Long>) {
         val crabTable = Day7Solution.CrabTable.load(input.crabs)
         assertThat(expected).allSatisfy { fromPosition, fuelCost ->
-            val count = crabTable.countAt(fromPosition)
+            val count = crabTable.crabs.single { it.crab.horizontalPosition == fromPosition }.count
             val actualCost = count * part.computeFuelCostBetween(fromPosition, (fromPosition - position).absoluteValue)
             assertThat(actualCost).isEqualTo(fuelCost)
         }
