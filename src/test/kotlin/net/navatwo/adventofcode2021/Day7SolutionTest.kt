@@ -22,8 +22,16 @@ class Day7SolutionTest {
 
         runAndAssert(
             input = input,
-            days = 2,
-            expected = listOf(1, 2, 1, 6, 0, 8),
+            position = 2,
+            expected = mapOf(
+                0 to 2,
+                1 to 2,
+                2 to 0,
+                4 to 2,
+                7 to 5,
+                14 to 12,
+                16 to 14,
+            ),
         )
 
         val result = part1.solve(input)
@@ -48,7 +56,7 @@ class Day7SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(26984457539L)
+        assertThat(result).isComputed(168)
     }
 
     @Test
@@ -64,12 +72,10 @@ class Day7SolutionTest {
         )
     }
 
-    private fun runAndAssert(input: Day7Solution.Input, days: Int, expected: Collection<Int>) {
-//        val result = Day6Solution.computeFish(input, days)
-//
-//        assertThat(result.fishTable.fishes()).containsExactlyInAnyOrderElementsOf(
-//            expected.sorted().map { AnglerFish(it) },
-//        )
-//        assertThat(result.computed).isEqualTo(expected.size.toLong())
+    private fun runAndAssert(input: Day7Solution.Input, position: Int, expected: Map<Int, Long>) {
+        val crabTable = Day7Solution.CrabTable.load(input.crabs)
+        assertThat(expected).allSatisfy { fromPosition, fuelCost ->
+            assertThat(crabTable.computeFuelCostBetween(fromPosition, position)).isEqualTo(fuelCost)
+        }
     }
 }
