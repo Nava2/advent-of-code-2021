@@ -69,14 +69,11 @@ sealed class Day6Solution : Solution<Day6Solution.Input, Day6Solution.Result> {
                 fish[f.timeToSpawn] += 1L
             }
 
-//            run {
-//                val fishTable = FishTable(0, fish)
-//                println("Initial state: " +
-//                        fishTable.fishes().joinToString(",") { it.timeToSpawn.toString() })
-//            }
-
             for (day in 0 until days) {
                 val index = day % BUFFER_COUNT // index in the array
+
+                // We have to zero out "today," then add the value to
+                // 6 days + 7 days later
                 val spawningToday = fish[index]
                 fish[index] = 0
 
@@ -85,10 +82,6 @@ sealed class Day6Solution : Solution<Day6Solution.Input, Day6Solution.Result> {
 
                 val newSpawnIndex = (day + NEW_BIRTH_DAYS + 1) % BUFFER_COUNT
                 fish[newSpawnIndex] += spawningToday
-
-//                val fishTable = FishTable(day + 1, fish)
-//                println("After ${(day + 1).toString().padStart(2, ' ')} days: " +
-//                        fishTable.fishes().joinToString(",") { it.timeToSpawn.toString() })
             }
 
             return Result(
