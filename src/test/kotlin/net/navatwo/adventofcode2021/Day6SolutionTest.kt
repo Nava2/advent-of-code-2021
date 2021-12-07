@@ -2,6 +2,7 @@ package net.navatwo.adventofcode2021
 
 import net.navatwo.adventofcode2021.benchmarks.Benchmark
 import net.navatwo.adventofcode2021.day6.Day6Solution
+import net.navatwo.adventofcode2021.day6.Day6Solution.Input.AnglerFish
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -14,6 +15,14 @@ class Day6SolutionTest {
     @Test
     fun `p1 sample`() {
         val input = part1.parseResource(SAMPLE_RESOURCE)
+
+        assertThat(input.fish).containsExactly(
+            AnglerFish(3),
+            AnglerFish(4),
+            AnglerFish(3),
+            AnglerFish(1),
+            AnglerFish(2),
+        )
 
         val result = part1.solve(input)
         assertThat(result.computed).isEqualTo(5)
