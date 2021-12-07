@@ -11,10 +11,15 @@ sealed class Day7Solution : Solution<Day7Solution.Input, ComputedResult> {
     }
 
     override fun parse(lines: List<String>): Input {
-        TODO()
+        return Input(
+            crabs = lines.first().splitToSequence(',').map { Crab(it.toInt()) }.toList(),
+        )
     }
 
     data class Input(
-        val numbers: List<Int>,
+        val crabs: List<Crab>,
     )
+
+    @JvmInline
+    value class Crab(val horizontalPosition: Int)
 }

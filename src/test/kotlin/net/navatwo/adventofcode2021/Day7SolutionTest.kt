@@ -2,6 +2,7 @@ package net.navatwo.adventofcode2021
 
 import net.navatwo.adventofcode2021.benchmarks.Benchmark
 import net.navatwo.adventofcode2021.day7.Day7Solution
+import net.navatwo.adventofcode2021.day7.Day7Solution.Crab
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -14,6 +15,10 @@ class Day7SolutionTest {
     @Test
     fun `p1 sample`() {
         val input = part1.parseResource(SAMPLE_RESOURCE)
+
+        assertThat(input.crabs).containsExactlyInAnyOrderElementsOf(
+            listOf(16, 1, 2, 0, 4, 2, 7, 1, 2, 14).map { Crab(it) }
+        )
 
         runAndAssert(
             input = input,
