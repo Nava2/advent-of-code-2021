@@ -4,7 +4,7 @@ import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 import kotlin.math.absoluteValue
 
-sealed class Day7Solution : Solution<Day7Solution.Input, Day7Solution.Result> {
+sealed class Day7Solution : Solution<Day7Solution.Input> {
     object Part1 : Day7Solution() {
         override fun computeFuelCostBetween(from: Int, distance: Int): Long = distance.toLong()
     }

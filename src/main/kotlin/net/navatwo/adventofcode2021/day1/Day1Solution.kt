@@ -3,7 +3,7 @@ package net.navatwo.adventofcode2021.day1
 import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 
-sealed class Day1Solution : Solution<List<Day1Solution.Depth>, ComputedResult> {
+sealed class Day1Solution : Solution<List<Day1Solution.Depth>> {
     object Part1 : Day1Solution() {
         override fun solve(input: List<Depth>): ComputedResult {
             return ComputedResult.Simple(

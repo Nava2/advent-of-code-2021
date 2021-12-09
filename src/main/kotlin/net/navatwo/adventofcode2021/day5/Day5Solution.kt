@@ -6,7 +6,7 @@ import kotlin.math.sign
 
 class Day5Solution private constructor(
     private val includeDiagonals: Boolean
-) : Solution<Day5Solution.Input, ComputedResult> {
+) : Solution<Day5Solution.Input> {
     companion object {
         val Part1 = Day5Solution(false)
         val Part2 = Day5Solution(true)
