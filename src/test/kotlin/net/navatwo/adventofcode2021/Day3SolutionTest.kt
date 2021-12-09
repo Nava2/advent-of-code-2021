@@ -28,7 +28,7 @@ class Day3SolutionTest {
         )
 
         val result = part1.solve(input)
-        assertThat(result.consumption).isEqualTo(198)
+        assertThat(result).isComputed(198)
         assertThat(result).isEqualTo(Day3Solution.PowerRate(22, 9))
 
     }
@@ -38,7 +38,7 @@ class Day3SolutionTest {
         val input = part1.parseResource(INPUT_RESOURCE)
 
         val result = part1.solve(input)
-        assertThat(result.consumption).isEqualTo(2250414)
+        assertThat(result).isComputed(2250414)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
@@ -197,7 +197,7 @@ class Day3SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result.consumption).isEqualTo(6085575)
+        assertThat(result).isComputed(6085575)
         assertThat(result).isEqualTo(
             LifeSupportRate(
                 oxygenGeneratorRate = 1935,

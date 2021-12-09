@@ -44,7 +44,7 @@ class Day6SolutionTest {
         )
 
         val result = part1.solve(input)
-        assertThat(result.computed).isEqualTo(5934)
+        assertThat(result).isComputed(5934)
     }
 
     @Test
@@ -65,7 +65,7 @@ class Day6SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result.computed).isEqualTo(26984457539L)
+        assertThat(result).isComputed(26984457539L)
     }
 
     @Test
@@ -73,7 +73,7 @@ class Day6SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result.computed).isEqualTo(1644286074024L)
+        assertThat(result).isComputed(1644286074024L)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
@@ -87,6 +87,6 @@ class Day6SolutionTest {
         assertThat(result.fishTable.fishes()).containsExactlyInAnyOrderElementsOf(
             expected.sorted().map { AnglerFish(it) },
         )
-        assertThat(result.computed).isEqualTo(expected.size.toLong())
+        assertThat(result).isComputed(expected.size.toLong())
     }
 }

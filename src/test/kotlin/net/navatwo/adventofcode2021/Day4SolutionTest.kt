@@ -44,7 +44,7 @@ class Day4SolutionTest {
         )
 
         val result = part1.solve(input)
-        assertThat(result.computed).isEqualTo(4512)
+        assertThat(result).isComputed(4512)
     }
 
     @Test
@@ -52,7 +52,7 @@ class Day4SolutionTest {
         val input = part1.parseResource(INPUT_RESOURCE)
 
         val result = part1.solve(input)
-        assertThat(result.computed).isEqualTo(22680)
+        assertThat(result).isComputed(22680)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
@@ -65,7 +65,7 @@ class Day4SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result.computed).isEqualTo(1924)
+        assertThat(result).isComputed(1924)
     }
 
     @Test
@@ -73,7 +73,7 @@ class Day4SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result.computed).isEqualTo(16168)
+        assertThat(result).isComputed(16168)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),

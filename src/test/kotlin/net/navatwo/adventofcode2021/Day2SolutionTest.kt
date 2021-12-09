@@ -24,13 +24,13 @@ class Day2SolutionTest {
             Action.Forward(2),
         )
 
-        assertThat(part1.solve(input)).isEqualTo(150)
+        assertThat(part1.solve(input)).isComputed(150)
     }
 
     @Test
     fun p1() {
         val input = part1.parseResource(INPUT_RESOURCE)
-        assertThat(part1.solve(input)).isEqualTo(2070300)
+        assertThat(part1.solve(input)).isComputed(2070300)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
@@ -41,13 +41,13 @@ class Day2SolutionTest {
     @Test
     fun `p2 - sample`() {
         val input = part2.parseResource(SAMPLE_RESOURCE)
-        assertThat(part2.solve(input)).isEqualTo(900)
+        assertThat(part2.solve(input)).isComputed(900)
     }
 
     @Test
     fun p2() {
         val input = part2.parseResource(INPUT_RESOURCE)
-        assertThat(part2.solve(input)).isEqualTo(2078985210)
+        assertThat(part2.solve(input)).isComputed(2078985210)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),

@@ -41,7 +41,7 @@ class Day5SolutionTest {
         )
 
         val result = part1.solve(input)
-        assertThat(result.computed).isEqualTo(5)
+        assertThat(result).isComputed(5)
     }
 
     @Test
@@ -49,7 +49,7 @@ class Day5SolutionTest {
         val input = part1.parseResource(INPUT_RESOURCE)
 
         val result = part1.solve(input)
-        assertThat(result.computed).isEqualTo(5774)
+        assertThat(result).isComputed(5774)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
@@ -62,7 +62,7 @@ class Day5SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result.computed).isEqualTo(12)
+        assertThat(result).isComputed(12)
     }
 
     @Test
@@ -70,7 +70,7 @@ class Day5SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result.computed).isEqualTo(18423)
+        assertThat(result).isComputed(18423)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),

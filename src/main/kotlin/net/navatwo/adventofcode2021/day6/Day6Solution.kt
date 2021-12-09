@@ -1,6 +1,7 @@
 package net.navatwo.adventofcode2021.day6
 
 import net.navatwo.adventofcode2021.day6.Day6Solution.Result.FishTable
+import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 
 const val NEW_BIRTH_DAYS = 8
@@ -36,8 +37,8 @@ sealed class Day6Solution : Solution<Day6Solution.Input, Day6Solution.Result> {
 
     data class Result(
         val fishTable: FishTable,
-        val computed: Long,
-    ) {
+        override val computed: Long,
+    ) : ComputedResult {
         data class FishTable(
             val fish: List<Long>,
         ) {
@@ -60,7 +61,6 @@ sealed class Day6Solution : Solution<Day6Solution.Input, Day6Solution.Result> {
     }
 
     companion object {
-
         internal fun computeFish(input: Input, days: Int): Result {
             // each index is a day offset
             // each value is a count of fish

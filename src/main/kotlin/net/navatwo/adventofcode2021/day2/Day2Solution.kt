@@ -1,10 +1,11 @@
 package net.navatwo.adventofcode2021.day2
 
+import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 
-sealed class Day2Solution : Solution<List<Day2Solution.Action>, Int> {
+sealed class Day2Solution : Solution<List<Day2Solution.Action>, ComputedResult> {
     object Part1 : Day2Solution() {
-        override fun solve(input: List<Action>): Int {
+        override fun solve(input: List<Action>): ComputedResult {
             val position = input.fold(Position.ZERO) { position, action ->
                 val (x, y, _) = position
                 when (action) {
@@ -14,12 +15,12 @@ sealed class Day2Solution : Solution<List<Day2Solution.Action>, Int> {
                 }
             }
 
-            return position.result()
+            return ComputedResult.Simple(position.result())
         }
     }
 
     object Part2 : Day2Solution() {
-        override fun solve(input: List<Action>): Int {
+        override fun solve(input: List<Action>): ComputedResult {
             val position = input.fold(Position.ZERO) { position, action ->
                 val (x, y, aim) = position
                 when (action) {
@@ -32,7 +33,7 @@ sealed class Day2Solution : Solution<List<Day2Solution.Action>, Int> {
                 }
             }
 
-            return position.result()
+            return ComputedResult.Simple(position.result())
         }
     }
 
