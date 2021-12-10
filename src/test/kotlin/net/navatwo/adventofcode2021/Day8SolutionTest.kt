@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 private const val SAMPLE_RESOURCE = "day8/p1_sample.txt"
 private const val INPUT_RESOURCE = "day8/p1_input.txt"
 private val part1 = Day8Solution.Part1
-private val part2 = Day8Solution.Part1
+private val part2 = Day8Solution.Part2
 
 class Day8SolutionTest {
     @Test
@@ -37,7 +37,7 @@ class Day8SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(168)
+        assertThat(result).isComputed(61229)
     }
 
     @Test
@@ -45,7 +45,7 @@ class Day8SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(91257582L)
+        assertThat(result).isComputed(973292L)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
