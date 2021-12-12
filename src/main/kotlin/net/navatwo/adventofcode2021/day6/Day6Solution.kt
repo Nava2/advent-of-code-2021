@@ -7,7 +7,7 @@ import net.navatwo.adventofcode2021.framework.Solution
 const val NEW_BIRTH_DAYS = 8
 const val BUFFER_COUNT = NEW_BIRTH_DAYS + 1
 
-sealed class Day6Solution : Solution<Day6Solution.Input, Day6Solution.Result> {
+sealed class Day6Solution : Solution<Day6Solution.Input> {
     object Part1 : Day6Solution() {
         override fun solve(input: Input): Result {
             return computeFish(input, 80)

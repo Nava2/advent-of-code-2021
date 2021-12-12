@@ -1,6 +1,5 @@
 package net.navatwo.adventofcode2021
 
-import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 
 private val loadedLines: MutableMap<String, List<String>> = mutableMapOf()
@@ -15,6 +14,6 @@ fun loadLines(resourceName: String): List<String> {
     }
 }
 
-fun <I, T : ComputedResult> Solution<I, T>.parseResource(resourceName: String): I {
+fun <I> Solution<I>.parseResource(resourceName: String): I {
     return parse(loadLines(resourceName))
 }

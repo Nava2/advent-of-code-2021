@@ -6,7 +6,7 @@ import java.util.Objects
 
 private const val CARD_ROWS = 5
 
-sealed class Day4Solution : Solution<Day4Solution.Input, Day4Solution.Result> {
+sealed class Day4Solution : Solution<Day4Solution.Input> {
     object Part1 : Day4Solution() {
         override fun solve(input: Input): Result {
             val numbers = input.numbers

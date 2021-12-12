@@ -5,8 +5,8 @@ import net.navatwo.adventofcode2021.framework.Solution
 import java.util.BitSet
 import kotlin.math.roundToInt
 
-sealed class Day3Solution<S : ComputedResult> : Solution<Day3Solution.Input, S> {
-    object Part1 : Day3Solution<PowerRate>() {
+sealed class Day3Solution : Solution<Day3Solution.Input> {
+    object Part1 : Day3Solution() {
         override fun solve(input: Input): PowerRate {
             val gammaRateBitSet = countMostCommon(input.bitSets, input.width)
             val gammaRate = gammaRateBitSet.toInt(input.width)
@@ -20,7 +20,7 @@ sealed class Day3Solution<S : ComputedResult> : Solution<Day3Solution.Input, S> 
         }
     }
 
-    object Part2 : Day3Solution<LifeSupportRate>() {
+    object Part2 : Day3Solution() {
         override fun solve(input: Input): LifeSupportRate {
             val oxygenRating = searchForValue(input.bitSets, useMostCommonBit = true)
             val co2Rating = searchForValue(input.bitSets, useMostCommonBit = false)
