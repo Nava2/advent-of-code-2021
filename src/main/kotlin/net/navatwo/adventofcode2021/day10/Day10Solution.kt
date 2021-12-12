@@ -3,33 +3,48 @@ package net.navatwo.adventofcode2021.day10
 import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 
-private val CHUNK_CHARS = mapOf(
-    '(' to ')',
-    '[' to ']',
-    '{' to '}',
-    '<' to '>',
-)
+private fun Char.mapToClose(): Char = when (this) {
+    '(' -> ')'
+    '[' -> ']'
+    '{' -> '}'
+    '<' -> '>'
+    else -> error("invalid input")
+}
 
-private val CHUNK_CHARS_BY_CLOSE = CHUNK_CHARS.entries.associate { (o, c) -> c to o }
+private fun Char.mapToOpen(): Char = when (this) {
+    ')' -> '('
+    ']' -> '['
+    '}' -> '{'
+    '>' -> '<'
+    else -> error("invalid input")
+}
 
-private val OPEN_CHARS = CHUNK_CHARS.keys
-private val CLOSE_CHARS = CHUNK_CHARS.values.toSet()
+private fun Char.isOpenChar() = when (this) {
+    '(', '[', '{', '<' -> true
+    else -> false
+}
+
+private fun Char.isCloseChar() = when (this) {
+    ')', ']', '}', '>' -> true
+    else -> false
+}
 
 sealed class Day10Solution : Solution<Day10Solution.Input> {
     object Part1 : Day10Solution() {
-        private val CLOSE_SCORE: Map<Char, Long> = mapOf(
-            ')' to 3L,
-            ']' to 57L,
-            '}' to 1197L,
-            '>' to 25137L,
-        )
+        private fun computeCloseScore(c: Char): Long = when (c) {
+            ')' -> 3L
+            ']' -> 57L
+            '}' -> 1197L
+            '>' -> 25137L
+            else -> error("error")
+        }
 
         override fun solve(input: Input): ComputedResult {
             val stack = ArrayDeque<Char>()
             val totalScore = input.lines.asSequence()
                 .mapNotNull { line ->
                     findCorruptedChar(stack, line)
-                        ?.let { CLOSE_SCORE.getValue(it) }
+                        ?.let { computeCloseScore(it) }
                 }
                 .sum()
 
@@ -38,8 +53,37 @@ sealed class Day10Solution : Solution<Day10Solution.Input> {
     }
 
     object Part2 : Day10Solution() {
+        private fun computeCloseScore(c: Char): Long = when (c) {
+            ')' -> 1L
+            ']' -> 2L
+            '}' -> 3L
+            '>' -> 4L
+            else -> error("error")
+        }
+
         override fun solve(input: Input): ComputedResult {
-            return ComputedResult.Simple(10L)
+            val stack = ArrayDeque<Char>()
+
+            val scores = input.lines
+                .asSequence()
+                .map { line ->
+                    if (findCorruptedChar(stack, line) != null) {
+                        0
+                    } else {
+                        var acc = 0L
+                        while (stack.isNotEmpty()) {
+                            val c = stack.removeLast()
+                            acc = acc * 5 + computeCloseScore(c.mapToClose())
+                        }
+                        acc
+                    }
+                }
+                .filter { it > 0 }
+                .sorted()
+                .toList()
+
+            val middleScore = scores[scores.size / 2]
+            return ComputedResult.Simple(middleScore)
         }
     }
 
@@ -51,13 +95,13 @@ sealed class Day10Solution : Solution<Day10Solution.Input> {
         stack.clear()
 
         val corruptedChar = line.firstOrNull { c ->
-            when (c) {
-                in OPEN_CHARS -> {
+            when {
+                c.isOpenChar() -> {
                     stack.addLast(c)
                     false
                 }
-                in CLOSE_CHARS -> {
-                    val closeChar = CHUNK_CHARS_BY_CLOSE.getValue(c)
+                c.isCloseChar() -> {
+                    val closeChar = c.mapToOpen()
                     val openChar = stack.removeLastOrNull()
                     openChar != closeChar
                 }
