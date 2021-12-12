@@ -38,7 +38,7 @@ class Day9SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(61229)
+        assertThat(result).isComputed(1134)
     }
 
     @Test
@@ -46,7 +46,7 @@ class Day9SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(973292L)
+        assertThat(result).isComputed(900864L)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
