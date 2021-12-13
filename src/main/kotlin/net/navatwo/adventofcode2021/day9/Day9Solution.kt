@@ -1,7 +1,11 @@
 package net.navatwo.adventofcode2021.day9
 
+import net.navatwo.adventofcode2021.Coord
 import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
+import net.navatwo.adventofcode2021.getCoord
+import net.navatwo.adventofcode2021.getOrNull
+import net.navatwo.adventofcode2021.initializeVisitedGrid
 
 sealed class Day9Solution : Solution<Day9Solution.Input> {
     object Part1 : Day9Solution() {
@@ -18,7 +22,7 @@ sealed class Day9Solution : Solution<Day9Solution.Input> {
 
     object Part2 : Day9Solution() {
         override fun solve(input: Input): ComputedResult {
-            val visited = input.initializeVisited()
+            val visited = input.heightMap.initializeVisitedGrid()
 
             val basins = input.lowPoints()
                 .map { coord ->
@@ -65,11 +69,6 @@ sealed class Day9Solution : Solution<Day9Solution.Input> {
             return ComputedResult.Simple(result)
         }
 
-
-        private fun Input.initializeVisited(): Array<BooleanArray> {
-            val columnCount = heightMap.first().size
-            return Array(heightMap.size) { BooleanArray(columnCount) }
-        }
     }
 
     override fun parse(lines: List<String>): Input {
@@ -97,7 +96,7 @@ sealed class Day9Solution : Solution<Day9Solution.Input> {
                     .withIndex()
                     .mapNotNull { (x, cell) ->
                         val isLower = forCoords(x, y).all {
-                            val height = heightMap.getCoord(it)?.height
+                            val height = heightMap.getOrNull(it)?.height
                             height != null && height > cell.height
                         }
 
@@ -121,14 +120,3 @@ sealed class Day9Solution : Solution<Day9Solution.Input> {
     @JvmInline
     value class Height(val height: Int)
 }
-
-fun <T> List<List<T>>.getCoord(x: Int, y: Int): T? {
-    val row = getOrNull(y)
-    return row?.getOrNull(x)
-}
-
-fun <T> List<List<T>>.getCoord(coord: Coord): T? {
-    return getCoord(coord.x, coord.y)
-}
-
-data class Coord(val x: Int, val y: Int)
