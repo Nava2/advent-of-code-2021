@@ -3,11 +3,61 @@ package net.navatwo.adventofcode2021.day12
 import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 
+private val START = Day12Solution.Cave("start")
+private val END = Day12Solution.Cave("end")
+
 sealed class Day12Solution : Solution<Day12Solution.Input> {
     object Part1 : Day12Solution() {
         override fun solve(input: Input): ComputedResult {
-            TODO()
+            val connections = input.connections
+                .flatMap {
+                    listOf(it.a to it.b, it.b to it.a)
+                }
+                .groupBy({ it.first }) { it.second }
+
+            val initialPath = Path(listOf(START))
+            val paths = mutableSetOf<Path>()
+            helper(
+                connections = connections,
+                paths = paths,
+                caveCounts = connections.mapValues { (cave, _) ->
+                    if (cave != START) 0 else 1
+                },
+                currentPath = initialPath,
+            )
+
+            return ComputedResult.Simple(paths.size)
         }
+
+        private fun helper(
+            connections: Map<Cave, List<Cave>>,
+            paths: MutableSet<Path>,
+            caveCounts: Map<Cave, Int>,
+            currentPath: Path,
+        ) {
+            val lastCave = currentPath.caves.last()
+            if (lastCave == END) {
+                paths.add(currentPath)
+                return
+            }
+
+            val nextCaves = connections[lastCave]
+                ?.filter { nextCave ->
+                    nextCave.isLarge() || caveCounts[nextCave] == 0
+                }
+                ?: return
+
+            for (nextCave in nextCaves) {
+                val currentCount = caveCounts.getValue(nextCave)
+                helper(
+                    connections = connections,
+                    paths = paths,
+                    caveCounts = caveCounts + mapOf(nextCave to currentCount + 1),
+                    currentPath = currentPath.append(nextCave),
+                )
+            }
+        }
+
     }
 
     object Part2 : Day12Solution() {
@@ -16,13 +66,29 @@ sealed class Day12Solution : Solution<Day12Solution.Input> {
         }
     }
 
+
     override fun parse(lines: List<String>): Input {
-        TODO()
+        return Input(
+            connections = lines.map { line ->
+                val (a, b) = line.split('-')
+                Connection(Cave(a), Cave(b))
+            }
+        )
     }
 
     data class Input(
         val connections: List<Connection>,
     )
 
-    data class Connection(val a: String, val b: String)
+    data class Connection(val a: Cave, val b: Cave)
+
+    @JvmInline
+    value class Cave(val name: String) {
+        fun isLarge(): Boolean = name[0].isUpperCase()
+    }
+
+    @JvmInline
+    value class Path(val caves: List<Cave>) {
+        fun append(cave: Cave): Path = Path(caves + cave)
+    }
 }
