@@ -1,7 +1,6 @@
 package net.navatwo.adventofcode2021
 
 import net.navatwo.adventofcode2021.benchmarks.Benchmark
-import net.navatwo.adventofcode2021.day10.Day10Solution
 import net.navatwo.adventofcode2021.day11.Day11Solution
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -38,7 +37,7 @@ class Day11SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(288957)
+        assertThat(result).isComputed(195)
     }
 
     @Test
@@ -46,7 +45,7 @@ class Day11SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(2182912364L)
+        assertThat(result).isComputed(437)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
