@@ -16,7 +16,7 @@ class Day13SolutionTest {
         val input = part1.parseResource(SAMPLE_RESOURCE)
 
         val result = part1.solve(input)
-        assertThat(result).isComputed(10)
+        assertThat(result).isComputed(17)
     }
 
     @Test
