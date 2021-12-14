@@ -55,7 +55,7 @@ class Day12SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE_1)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(195)
+        assertThat(result).isComputed(36)
     }
 
     @Test
@@ -63,7 +63,15 @@ class Day12SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE_2)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(195)
+        assertThat(result).isComputed(103)
+    }
+
+    @Test
+    fun `p12sample 3`() {
+        val input = part1.parseResource(SAMPLE_RESOURCE_3)
+
+        val result = part1.solve(input)
+        assertThat(result).isComputed(3509)
     }
 
     @Test
@@ -71,7 +79,7 @@ class Day12SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-        assertThat(result).isComputed(437)
+        assertThat(result).isComputed(131228)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
