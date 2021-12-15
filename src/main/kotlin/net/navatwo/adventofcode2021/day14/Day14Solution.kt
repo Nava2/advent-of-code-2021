@@ -41,45 +41,63 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
         private const val LAST_STEP: Int = 40
 
         override fun solve(input: Input): ComputedResult {
-            val rulesTable = RulesTable.load(input.template, input.rules)
+            val rules = input.rules
+            val template = input.template
 
-            val queue = ArrayDeque<Step>()
+            var pairFrequencies = template.zipWithNext()
+                .map { it to 1L }
+                .groupBy({ it.first }) { it.second }
+                .mapValues { it.value.sum() }
 
-            val counters = mutableMapOf<Element, MutableLong>()
+            var elementCounts = template.groupBy { it }
+                .mapValues { it.value.size.toLong() }
+                .toMutableMap()
 
-            for ((turtle, rabbit) in input.template.zipWithNext()) {
-                counters.incCounter(turtle)
-                counters.incCounter(rabbit)
+            repeat(LAST_STEP) {
+                val stepFrequencies = mutableMapOf<Pair<Element, Element>, Long>()
+                val stepElementCounts = elementCounts.toMutableMap()
 
-                queue.addFirst(Step(1, turtle, rabbit))
+                for ((pair, multiplier) in pairFrequencies.entries) {
+                    val insert = rules.getValue(pair)
+                    updateCounts(
+                        stepFrequencies = stepFrequencies,
+                        stepElementCounts = stepElementCounts,
+                        turtle = pair.first,
+                        rabbit = pair.second,
+                        insert = insert,
+                        multiplier = multiplier,
+                    )
+                }
+
+                pairFrequencies = stepFrequencies
+                elementCounts = stepElementCounts
             }
 
-            var loopCounter = 0L
-            while (queue.isNotEmpty()) {
-                val (step, turtle, rabbit) = queue.removeLast()
-
-                if (step == LAST_STEP) continue
-                val insert = rulesTable.getPair(turtle, rabbit) ?: continue
-
-                counters.incCounter(insert)
-
-                queue.addLast(Step(step + 1, turtle, insert))
-                queue.addLast(Step(step + 1, insert, rabbit))
-                loopCounter += 1
-            }
-
-            val mostAndLeast = computeResults(counters.mapValues { it.value.n })
+            val mostAndLeast = computeResults(elementCounts)
             val (_, mostCount) = mostAndLeast.most
             val (_, leastCount) = mostAndLeast.least
 
             return ComputedResult.Simple(mostCount - leastCount)
         }
 
-        data class Step(val step: Int, val turtle: Element, val rabbit: Element)
+        private fun updateCounts(
+            stepFrequencies: MutableMap<Pair<Element, Element>, Long>,
+            stepElementCounts: MutableMap<Element, Long>,
+            turtle: Element,
+            rabbit: Element,
+            insert: Element,
+            multiplier: Long
+        ) {
+            stepFrequencies.compute(turtle to insert) { _, count ->
+                (count ?: 0L) + multiplier
+            }
+            stepFrequencies.compute(insert to rabbit) { _, count ->
+                (count ?: 0L) + multiplier
+            }
 
-        fun <K> MutableMap<K, MutableLong>.incCounter(key: K) {
-            val counter = getOrPut(key) { MutableLong(0) }
-            counter.n += 1
+//            stepElementCounts.compute(turtle) { _, c -> (c ?: 0L) + multiplier }
+            stepElementCounts.compute(insert) { _, c -> (c ?: 0L) + multiplier }
+//            stepElementCounts.compute(rabbit) { _, c -> (c ?: 0L) + multiplier }
         }
     }
 
@@ -139,7 +157,7 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
         )
     }
 
-    protected fun computeMostAndLeast(polymer: Iterable<Element>): Results {
+    protected fun computeCounts(polymer: Iterable<Element>): Map<Element, Long> {
         val countMap = mutableMapOf<Element, Long>()
 
         for (element in polymer) {
@@ -148,6 +166,11 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
             }
         }
 
+        return countMap
+    }
+
+    protected fun computeMostAndLeast(polymer: Iterable<Element>): Results {
+        val countMap = computeCounts(polymer)
         return computeResults(countMap)
     }
 
