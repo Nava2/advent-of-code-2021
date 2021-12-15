@@ -41,7 +41,7 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
         private const val LAST_STEP: Int = 40
 
         override fun solve(input: Input): ComputedResult {
-            val rules = input.rules
+            val rules = RulesTable.load(input.template, input.rules)
             val template = input.template
 
             var pairFrequencies = template.zipWithNext()
@@ -58,7 +58,7 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
                 val stepElementCounts = elementCounts.toMutableMap()
 
                 for ((pair, multiplier) in pairFrequencies.entries) {
-                    val insert = rules.getValue(pair)
+                    val insert = rules.getPair(pair.first, pair.second)
                     updateCounts(
                         stepFrequencies = stepFrequencies,
                         stepElementCounts = stepElementCounts,
@@ -88,6 +88,7 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
             insert: Element,
             multiplier: Long
         ) {
+            // Only add the inserted pairs as the non-inserted are unaffected.
             stepFrequencies.compute(turtle to insert) { _, count ->
                 (count ?: 0L) + multiplier
             }
@@ -95,19 +96,18 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
                 (count ?: 0L) + multiplier
             }
 
-//            stepElementCounts.compute(turtle) { _, c -> (c ?: 0L) + multiplier }
+            // We keep the original counts from other elements and add the newly inserted value
             stepElementCounts.compute(insert) { _, c -> (c ?: 0L) + multiplier }
-//            stepElementCounts.compute(rabbit) { _, c -> (c ?: 0L) + multiplier }
         }
     }
 
-    data class RulesTable(
+    class RulesTable(
         private val table: Array<Array<Element?>?>,
         private val minElement: Element,
     ) {
-        fun getPair(turtle: Element, rabbit: Element): Element? {
+        fun getPair(turtle: Element, rabbit: Element): Element {
             return table[turtle.e.code - minElement.e.code]
-                ?.get(rabbit.e.code - minElement.e.code)
+                ?.get(rabbit.e.code - minElement.e.code)!!
         }
 
         companion object {
@@ -133,7 +133,6 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
                 )
             }
         }
-
     }
 
     override fun parse(lines: List<String>): Input {
@@ -155,18 +154,6 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
             template = template,
             rules = rules,
         )
-    }
-
-    protected fun computeCounts(polymer: Iterable<Element>): Map<Element, Long> {
-        val countMap = mutableMapOf<Element, Long>()
-
-        for (element in polymer) {
-            countMap.compute(element) { _, count ->
-                (count ?: 0L) + 1L
-            }
-        }
-
-        return countMap
     }
 
     protected fun computeMostAndLeast(polymer: Iterable<Element>): Results {
@@ -199,18 +186,27 @@ sealed class Day14Solution : Solution<Day14Solution.Input> {
         )
     }
 
+    private fun computeCounts(polymer: Iterable<Element>): Map<Element, Long> {
+        val countMap = mutableMapOf<Element, Long>()
+
+        for (element in polymer) {
+            countMap.compute(element) { _, count ->
+                (count ?: 0L) + 1L
+            }
+        }
+
+        return countMap
+    }
+
     data class Results(
         val most: Pair<Element, Long>,
         val least: Pair<Element, Long>,
     )
 
-
     data class Input(
         val template: List<Element>,
         val rules: Map<Pair<Element, Element>, Element>
     )
-
-    class MutableLong(var n: Long)
 
     @JvmInline
     value class Element(val e: Char)
