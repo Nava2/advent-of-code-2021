@@ -17,7 +17,7 @@ class Day14SolutionTest {
         val input = part1.parseResource(SAMPLE_RESOURCE)
 
         val result = part1.solve(input)
-        assertThat(result).isComputed(17)
+        assertThat(result).isComputed(1588)
     }
 
     @Test
@@ -25,7 +25,7 @@ class Day14SolutionTest {
         val input = part1.parseResource(INPUT_RESOURCE)
 
         val result = part1.solve(input)
-        assertThat(result).isComputed(942)
+        assertThat(result).isComputed(2233)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
@@ -38,7 +38,7 @@ class Day14SolutionTest {
         val input = part2.parseResource(SAMPLE_RESOURCE)
 
         val result = part2.solve(input)
-//        assertThat(result).isComputed(16)
+        assertThat(result).isComputed(2233)
     }
 
     @Test
@@ -46,7 +46,7 @@ class Day14SolutionTest {
         val input = part2.parseResource(INPUT_RESOURCE)
 
         val result = part2.solve(input)
-//        assertThat(result).isComputed(131228)
+        assertThat(result).isComputed(2188189693529)
 
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
