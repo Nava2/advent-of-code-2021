@@ -50,6 +50,8 @@ class Day15SolutionTest {
         Benchmark.run(
             inputContent = loadLines(INPUT_RESOURCE),
             solution = part2,
+            inputConfig = Benchmark.Stage.INPUT.config(warmupIterations = 2000U, iterations = 5_000U),
+            solveConfig = Benchmark.Stage.SOLVE.config(warmupIterations = 2000U, iterations = 5_000U),
         )
     }
 }

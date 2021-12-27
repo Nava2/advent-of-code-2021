@@ -28,8 +28,8 @@ class Benchmark<I> private constructor(
         fun <I> run(
             inputContent: List<String>,
             solution: Solution<I>,
-            inputConfig: Config? = Stage.INPUT.config(warmupIterations = 2000U, iterations = 25_000U),
-            solveConfig: Config = Stage.SOLVE.config(warmupIterations = 5000U, iterations = 25_000U),
+            inputConfig: Config? = Stage.INPUT.config(warmupIterations = 2000U, iterations = 10_000U),
+            solveConfig: Config = Stage.SOLVE.config(warmupIterations = 2000U, iterations = 25_000U),
         ) {
             val benchmark = Benchmark(
                 inputContent = inputContent,

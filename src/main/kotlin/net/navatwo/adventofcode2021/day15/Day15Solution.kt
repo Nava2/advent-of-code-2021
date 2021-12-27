@@ -1,6 +1,7 @@
 package net.navatwo.adventofcode2021.day15
 
 import net.navatwo.adventofcode2021.Coord
+import net.navatwo.adventofcode2021.coords
 import net.navatwo.adventofcode2021.framework.ComputedResult
 import net.navatwo.adventofcode2021.framework.Solution
 import net.navatwo.adventofcode2021.get
@@ -13,6 +14,14 @@ private const val WHITE = "\u001b[1;37m" // WHITE
 
 sealed class Day15Solution : Solution<Day15Solution.Input> {
     object Part1 : Day15Solution() {
+        override fun parse(lines: List<String>): Input {
+            return Input(
+                board = lines.map { line ->
+                    line.map { r -> RiskLevel(r.digitToInt()) }
+                }
+            )
+        }
+
         override fun solve(input: Input): ComputedResult {
             val board = input.board
 
@@ -26,16 +35,23 @@ sealed class Day15Solution : Solution<Day15Solution.Input> {
     }
 
     object Part2 : Day15Solution() {
+        override fun parse(lines: List<String>): Input {
+            val board = lines.map { line ->
+                line.map { r -> RiskLevel(r.digitToInt()) }
+            }
+            return Input(
+                board = loadBoard(board)
+            )
+        }
+
         override fun solve(input: Input): ComputedResult {
             val board = input.board
 
-            val fullBoard = loadBoard(board)
+            val path = djikstra(board)
 
-            val path = djikstra(fullBoard)
+//            println(writeRiskBoard(board, path))
 
-//            println(writeRiskBoard(fullBoard, path))
-
-            val result = path.fold(0L) { acc, coord -> acc + fullBoard[coord].risk }
+            val result = path.fold(0L) { acc, coord -> acc + board[coord].risk }
             return ComputedResult.Simple(result)
         }
 
@@ -44,11 +60,13 @@ sealed class Day15Solution : Solution<Day15Solution.Input> {
                 val projY = y.mod(board.size)
 
                 val row = board[projY]
-                MutableList(row.size * 5) { x ->
-                    val projX = x.mod(row.size)
-
-                    board[projY][projX]
+                ArrayList<RiskLevel>(row.size * 5).apply {
+                    repeat(row.size * 5) { add(RiskLevel(0)) }
                 }
+            }
+
+            for (coord in board.coords()) {
+                newBoard[coord.y][coord.x] = board[coord.y][coord.x]
             }
 
             // 1 2 3 4
@@ -69,13 +87,11 @@ sealed class Day15Solution : Solution<Day15Solution.Input> {
                     val copiedX = x / row.size
                     val prevX = if (copiedX == 0) x else x - row.size
 
-                    val nextValue = listOf(
-                        0,
-                        newBoard[y][prevX].risk,
-                        newBoard[prevY][x].risk,
+                    val nextValue = maxOf(
+                        1,
+                        (newBoard[y][prevX].risk + 1).mod(10),
+                        (newBoard[prevY][x].risk + 1).mod(10),
                     )
-                        .map { (it + 1).mod(10) }
-                        .maxOf { it }
 
                     newBoard[y][x] = RiskLevel(nextValue)
                 }
@@ -84,14 +100,6 @@ sealed class Day15Solution : Solution<Day15Solution.Input> {
             return newBoard
         }
 
-    }
-
-    override fun parse(lines: List<String>): Input {
-        return Input(
-            board = lines.map { line ->
-                line.map { r -> RiskLevel(r.digitToInt()) }
-            }
-        )
     }
 
     data class Input(
@@ -147,7 +155,7 @@ sealed class Day15Solution : Solution<Day15Solution.Input> {
             queue.addAll(neighbours)
         }
 
-        val path = mutableListOf<Coord>()
+        val path = ArrayList<Coord>(board.size + board.first().size)
         var next = end
 
         while (next != start) {
