@@ -45,12 +45,24 @@ operator fun Array<BooleanArray>.get(coord: Coord): Boolean {
     return this[coord.y][coord.x]
 }
 
+operator fun Array<IntArray>.get(coord: Coord): Int {
+    return this[coord.y][coord.x]
+}
+
 fun Array<BooleanArray>.getOrNull(coord: Coord): Boolean? {
     val row = getOrNull(coord.y)
     return row?.getOrNull(coord.x)
 }
 
 operator fun Array<BooleanArray>.set(coord: Coord, value: Boolean) {
+    this[coord.y][coord.x] = value
+}
+
+operator fun Array<LongArray>.set(coord: Coord, value: Long) {
+    this[coord.y][coord.x] = value
+}
+
+operator fun Array<IntArray>.set(coord: Coord, value: Int) {
     this[coord.y][coord.x] = value
 }
 
