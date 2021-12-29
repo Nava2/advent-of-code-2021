@@ -67,7 +67,6 @@ sealed class Day16Solution : Solution<Day16Solution.Input> {
         ) : Packet() {
             override fun sumVersions(): Long = version + packets.sumOf { it.sumVersions() }
 
-
             override fun calculate(): Long = when (typeId) {
                 TypeId.SUM -> packets.sumOf { it.calculate() }
                 TypeId.PRODUCT -> packets.fold(1L) { acc, packet -> acc * packet.calculate() }
@@ -203,7 +202,12 @@ sealed class Day16Solution : Solution<Day16Solution.Input> {
             }
         }
 
-        fun consume(n: Int): List<Boolean> {
+        fun tryConsumeInt(n: Int): Int? {
+            require(n <= 32) { "Requested too many bits as Int" }
+            return tryConsume(n)?.toInt()
+        }
+
+        private fun consume(n: Int): List<Boolean> {
             require(index + n <= buffer.size) { "not enough bits available n=$n" }
 
             if (n == 0) return listOf()
@@ -213,26 +217,9 @@ sealed class Day16Solution : Solution<Day16Solution.Input> {
             return result
         }
 
-        fun consumeInt(n: Int): Int {
-            require(n <= 32) { "Requested too many bits as Int" }
-            return consume(n).toInt()
-        }
-
-        fun tryConsumeInt(n: Int): Int? {
-            require(n <= 32) { "Requested too many bits as Int" }
-            return tryConsume(n)?.toInt()
-        }
-
         override fun toString(): String {
             return "Buffer{index=$index, length=${buffer.size}}"
         }
-    }
-}
-
-private fun <T> Iterator<T>.take(n: Int): List<T> {
-    return List(n) {
-        check(hasNext()) { "No values remain" }
-        next()
     }
 }
 
